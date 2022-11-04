@@ -114,10 +114,22 @@ class App {
     _isInRangeFromOneToNine = (numbers) =>
         [...numbers].every((number) => +number >= 1 && +number <= 9);
 
-    play() {
+    async play() {
         Console.print('숫자 야구 게임을 시작합니다.');
+
         this.pickComputerNumber();
-        this.startBaseballGame();
+        while (true) {
+            const gameResult = await this.startBaseballGame();
+
+            const [NEW_GAME, GAME_END, CONTINUE_GAME] = ['1', '2', '3'];
+
+            if (gameResult === NEW_GAME) {
+                this.pickComputerNumber();
+            } else if (gameResult === GAME_END) {
+                break;
+            } else if (gameResult === CONTINUE_GAME) {
+            }
+        }
     }
 }
 
