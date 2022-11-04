@@ -16,14 +16,28 @@ class App {
     }
 
     returnHint(userNumbers) {
-        const [strikeCount, ballCount] = [
-            this.countStrike(userNumbers),
-            this.countBall(userNumbers),
-        ];
+        return [this.countStrike(userNumbers), this.countBall(userNumbers)];
+    }
 
-        console.log('computeNumber: ' + this._computerNumber);
-        console.log('strikeCount: ' + strikeCount);
-        console.log('ballCount: ' + ballCount);
+    printHint(ballCount, strikeCount) {
+        let hintString = '';
+
+        if (!strikeCount && !ballCount) {
+            hintString = '낫싱';
+        }
+
+        if (ballCount) {
+            hintString = `${ballCount}볼`;
+        }
+
+        if (strikeCount) {
+            hintString =
+                hintString !== ''
+                    ? `${hintString} ${strikeCount}스트라이크`
+                    : `${strikeCount}스트라이크`;
+        }
+
+        Console.print(hintString);
     }
 
     countStrike(userNumbers) {
