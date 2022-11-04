@@ -39,6 +39,27 @@ class App {
         );
     }
 
+    startBaseballGame() {
+        while (true) {
+            let userNumbers = [];
+            Console.readLine('숫자를 입력해주세요 : ', (inputNumber) => {
+                if (this.invalidateNumber(inputNumber)) {
+                    throw Error('잘못된 값을 입력하였습니다.');
+                }
+
+                userNumbers = this.convertToNumberArray(inputNumber);
+                // Console.print('userNumbers: ' + userNumbers);
+                console.log(this.returnHint(userNumbers));
+            });
+
+            // Console.close();
+        }
+    }
+
+    convertToNumberArray(array) {
+        return [...array].map((item) => +item);
+    }
+
     invalidateNumber(numbers) {
         return !(
             this._isNumber(numbers) &&
