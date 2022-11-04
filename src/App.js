@@ -39,6 +39,25 @@ class App {
         );
     }
 
+    invalidateNumber(numbers) {
+        return !(
+            this._isNumber(numbers) &&
+            this._hasNoDuplication(numbers) &&
+            this._isThreeNumber(numbers) &&
+            this._isInRangeFromOneToNine(numbers)
+        );
+    }
+
+    _isNumber = (source) => !isNaN(parseInt(source, 10));
+
+    _hasNoDuplication = (numbers) =>
+        ![...numbers].some((number) => numbers.split(number).length > 2);
+
+    _isThreeNumber = (numbers) => numbers.length === 3;
+
+    _isInRangeFromOneToNine = (numbers) =>
+        [...numbers].every((number) => +number >= 1 && +number <= 9);
+
     play() {
         Console.print('숫자 야구 게임을 시작합니다.');
         this.pickComputerNumber();
