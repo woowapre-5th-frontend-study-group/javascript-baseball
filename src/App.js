@@ -53,21 +53,42 @@ class App {
         ).length;
     }
 
-    startBaseballGame() {
-        while (true) {
-            let userNumbers = [];
-            Console.readLine('숫자를 입력해주세요 : ', (inputNumber) => {
-                if (this.invalidateNumber(inputNumber)) {
-                    throw Error('잘못된 값을 입력하였습니다.');
-                }
+    async startBaseballGame() {
+        const userNumber = await this.inputNumber();
+        const isInvalidation = this.invalidateNumber(userNumber);
 
-                userNumbers = this.convertToNumberArray(inputNumber);
-                // Console.print('userNumbers: ' + userNumbers);
-                console.log(this.returnHint(userNumbers));
-            });
-
-            // Console.close();
+        if (isInvalidation) {
+            throw new Error('잘못된 값을 입력하였습니다.');
         }
+
+        const numberArray = this.convertToNumberArray(userNumber);
+        // console.log(this._computerNumber, numberArray);
+        const [strikeCount, ballCount] = this.returnHint(numberArray);
+        this.printHint(ballCount, strikeCount);
+
+        const THREE_STRIKE = 3;
+
+        if (strikeCount === THREE_STRIKE) {
+            Console.print('3개의 숫자를 모두 맞히셨습니다! 게임 종료');
+            const goContinue = await this.continueGame();
+            const [NEW_GAME, GAME_END] = ['1', '2'];
+            return goContinue === NEW_GAME ? NEW_GAME : GAME_END;
+        }
+
+        const CONTINUE_GAME = '3';
+        return CONTINUE_GAME;
+    }
+
+    inputNumber() {
+        return new Promise((resolve, _) => {
+            Console.readLine('숫자를 입력해주세요 : ', resolve);
+        });
+    }
+
+    continueGame() {
+        return new Promise((resolve, _) => {
+            Console.readLine('게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요.\n', resolve);
+        });
     }
 
     convertToNumberArray(array) {
