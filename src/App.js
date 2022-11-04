@@ -50,7 +50,7 @@ class App {
             (userNumber, index) =>
                 this._computerNumber.includes(userNumber) &&
                 this._computerNumber[index] !== userNumber
-        );
+        ).length;
     }
 
     startBaseballGame() {
