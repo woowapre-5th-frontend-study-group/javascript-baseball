@@ -1,98 +1,121 @@
 const { Random, Console } = require('@woowacourse/mission-utils');
 
 class App {
-    constructor() {}
+    constructor() {
+        this._running = false;
+        this._computerNumbers = [];
+        this._userNumbers = [];
+        this._newComputerPick = true;
+    }
 
-    pickComputerNumber() {
-        let randomNumber = [];
-        while (randomNumber.length < 3) {
-            const number = Random.pickNumberInRange(1, 9);
-            if (!randomNumber.includes(number)) {
-                randomNumber.push(number);
+    /* #region About member getter/setter */
+    getComputerNumbers() {
+        return this._computerNumbers;
+    }
+
+    setComputerNumbers(computerNumbers) {
+        this._computerNumbers = computerNumbers;
+    }
+
+    getGameState() {
+        return this._running;
+    }
+
+    setGameState(running) {
+        this._running = running;
+    }
+
+    getUserNumbers() {
+        return this._userNumbers;
+    }
+
+    setUserNumbers(userNumbers) {
+        this._userNumbers = userNumbers;
+    }
+
+    getNewComputerPick() {
+        return this._newComputerPick;
+    }
+
+    setNewComputerPick(newComputerPick) {
+        this._newComputerPick = newComputerPick;
+    }
+    /* #endregion */
+
+    async play() {
+        Console.print('숫자 야구 게임을 시작합니다.');
+
+        this.setGameState(true);
+
+        while (true) {
+            const END_GAME = false;
+            const gameState = this.getGameState();
+            if (gameState === END_GAME) break;
+
+            try {
+                await this.gameLoop();
+            } catch (error) {
+                throw error;
             }
         }
 
-        this._computerNumber = randomNumber;
+        Console.print('게임 종료!');
     }
 
-    returnHint(userNumbers) {
-        return [this.countStrike(userNumbers), this.countBall(userNumbers)];
-    }
-
-    printHint(ballCount, strikeCount) {
-        let hintString = '';
-
-        if (!strikeCount && !ballCount) {
-            hintString = '낫싱';
+    async gameLoop() {
+        const newComputerPick = this.getNewComputerPick();
+        if (newComputerPick) {
+            this.pickComputerNumber();
+            this.setNewComputerPick(false);
         }
 
-        if (ballCount) {
-            hintString = `${ballCount}볼`;
-        }
-
-        if (strikeCount) {
-            hintString =
-                hintString !== ''
-                    ? `${hintString} ${strikeCount}스트라이크`
-                    : `${strikeCount}스트라이크`;
-        }
-
-        Console.print(hintString);
-    }
-
-    countStrike(userNumbers) {
-        return userNumbers.filter((userNumber, index) => userNumber === this._computerNumber[index])
-            .length;
-    }
-
-    countBall(userNumbers) {
-        return userNumbers.filter(
-            (userNumber, index) =>
-                this._computerNumber.includes(userNumber) &&
-                this._computerNumber[index] !== userNumber
-        ).length;
-    }
-
-    async startBaseballGame() {
-        const userNumber = await this.inputNumber();
-        const isInvalidation = this.invalidateNumber(userNumber);
-
-        if (isInvalidation) {
+        const inputNumber = await this.inputNumber();
+        const isInvalidatedNumber = this.invalidateNumber(inputNumber);
+        if (isInvalidatedNumber) {
             throw new Error('잘못된 값을 입력하였습니다.');
         }
 
-        const numberArray = this.convertToNumberArray(userNumber);
-        // console.log(this._computerNumber, numberArray);
-        const [strikeCount, ballCount] = this.returnHint(numberArray);
-        this.printHint(ballCount, strikeCount);
+        const numberArray = this.convertToNumberArray(inputNumber);
+        this.setUserNumbers(numberArray);
+
+        const [strikeCount, ballCount] = this.compareNumbers();
+        this.printHint(strikeCount, ballCount);
 
         const THREE_STRIKE = 3;
-
         if (strikeCount === THREE_STRIKE) {
             Console.print('3개의 숫자를 모두 맞히셨습니다! 게임 종료');
-            const goContinue = await this.continueGame();
-            const [NEW_GAME, GAME_END] = ['1', '2'];
-            return goContinue === NEW_GAME ? NEW_GAME : GAME_END;
+
+            const inputToContinueGame = await this.inputToContinueGame();
+            const isInvalidatedAnswer = this.invalidateAnswer(inputToContinueGame);
+            if (isInvalidatedAnswer) {
+                throw new Error('잘못된 값을 입력하였습니다.');
+            }
+
+            const [CONTINUE_GAME, GAME_END] = ['1', '2'];
+            if (inputToContinueGame === CONTINUE_GAME) {
+                this.setNewComputerPick(true);
+            } else if (inputToContinueGame === GAME_END) {
+                this.setGameState(false);
+            }
+        }
+    }
+
+    pickComputerNumber() {
+        let randomNumbers = [];
+        while (randomNumbers.length < 3) {
+            const number = Random.pickNumberInRange(1, 9);
+            if (!randomNumbers.includes(number)) {
+                randomNumbers.push(number);
+            }
         }
 
-        const CONTINUE_GAME = '3';
-        return CONTINUE_GAME;
+        this._computerNumbers = randomNumbers;
     }
 
     inputNumber() {
         return new Promise((resolve, _) => {
             Console.readLine('숫자를 입력해주세요 : ', resolve);
         });
-    }
-
-    continueGame() {
-        return new Promise((resolve, _) => {
-            Console.readLine('게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요.\n', resolve);
-        });
-    }
-
-    convertToNumberArray(array) {
-        return [...array].map((item) => +item);
     }
 
     invalidateNumber(numbers) {
@@ -114,22 +137,61 @@ class App {
     _isInRangeFromOneToNine = (numbers) =>
         [...numbers].every((number) => +number >= 1 && +number <= 9);
 
-    async play() {
-        Console.print('숫자 야구 게임을 시작합니다.');
+    convertToNumberArray(array) {
+        return [...array].map((item) => +item);
+    }
 
-        this.pickComputerNumber();
-        while (true) {
-            const gameResult = await this.startBaseballGame();
+    compareNumbers() {
+        const userNumbers = this.getUserNumbers();
+        const computerNumbers = this.getComputerNumbers();
 
-            const [NEW_GAME, GAME_END, CONTINUE_GAME] = ['1', '2', '3'];
+        const strikeCount = this.countStrike(computerNumbers, userNumbers);
+        const ballCount = this.countBall(computerNumbers, userNumbers);
 
-            if (gameResult === NEW_GAME) {
-                this.pickComputerNumber();
-            } else if (gameResult === GAME_END) {
-                break;
-            } else if (gameResult === CONTINUE_GAME) {
-            }
+        return [strikeCount, ballCount];
+    }
+
+    countStrike(computerNumbers, userNumbers) {
+        return userNumbers.filter((userNumber, index) => userNumber === computerNumbers[index])
+            .length;
+    }
+
+    countBall(computerNumbers, userNumbers) {
+        return userNumbers.filter(
+            (userNumber, index) =>
+                computerNumbers.includes(userNumber) && computerNumbers[index] !== userNumber
+        ).length;
+    }
+
+    printHint(strikeCount, ballCount) {
+        let hintString = '';
+
+        if (!strikeCount && !ballCount) {
+            hintString = '낫싱';
         }
+
+        if (ballCount) {
+            hintString = `${ballCount}볼`;
+        }
+
+        if (strikeCount) {
+            hintString =
+                hintString !== ''
+                    ? `${hintString} ${strikeCount}스트라이크`
+                    : `${strikeCount}스트라이크`;
+        }
+
+        Console.print(hintString);
+    }
+
+    inputToContinueGame() {
+        return new Promise((resolve, _) => {
+            Console.readLine('게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요.\n', resolve);
+        });
+    }
+
+    invalidateAnswer(answer) {
+        return !(answer === '1' || answer === '2');
     }
 }
 
