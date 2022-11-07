@@ -69,32 +69,17 @@ class App {
         const inputNumber = await this.inputNumber();
         const isInvalidatedNumber = this.invalidateNumber(inputNumber);
         if (isInvalidatedNumber) {
-            throw new Error('잘못된 값을 입력하였습니다.');
+            throw new Error('inputNumber, 잘못된 값을 입력하였습니다.');
         }
 
         const numberArray = this.convertToNumberArray(inputNumber);
         this.setUserNumbers(numberArray);
 
+        console.log(`cn: ${this._computerNumbers} / un: ${this._userNumbers}`);
+
         const [strikeCount, ballCount] = this.compareNumbers();
         this.printHint(strikeCount, ballCount);
-
-        const THREE_STRIKE = 3;
-        if (strikeCount === THREE_STRIKE) {
-            Console.print('3개의 숫자를 모두 맞히셨습니다! 게임 종료');
-
-            const inputToContinueGame = await this.inputToContinueGame();
-            const isInvalidatedAnswer = this.invalidateAnswer(inputToContinueGame);
-            if (isInvalidatedAnswer) {
-                throw new Error('잘못된 값을 입력하였습니다.');
-            }
-
-            const [CONTINUE_GAME, GAME_END] = ['1', '2'];
-            if (inputToContinueGame === CONTINUE_GAME) {
-                this.setNewComputerPick(true);
-            } else if (inputToContinueGame === GAME_END) {
-                this.setGameState(false);
-            }
-        }
+        await this.checkThreeStrike(strikeCount);
     }
 
     pickComputerNumber() {
@@ -179,6 +164,26 @@ class App {
         }
 
         Console.print(hintString);
+    }
+
+    async checkThreeStrike(strikeCount) {
+        const THREE_STRIKE = 3;
+        if (strikeCount !== THREE_STRIKE) return;
+
+        Console.print('3개의 숫자를 모두 맞히셨습니다! 게임 종료');
+
+        const inputToContinueGame = await this.inputToContinueGame();
+        const isInvalidatedAnswer = this.invalidateAnswer(inputToContinueGame);
+        if (isInvalidatedAnswer) {
+            throw new Error('inputToContinueGame, 잘못된 값을 입력하였습니다.');
+        }
+
+        const [CONTINUE_GAME, GAME_END] = ['1', '2'];
+        if (inputToContinueGame === CONTINUE_GAME) {
+            this.setNewComputerPick(true);
+        } else if (inputToContinueGame === GAME_END) {
+            this.setGameState(false);
+        }
     }
 
     inputToContinueGame() {
