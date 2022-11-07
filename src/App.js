@@ -52,14 +52,11 @@ class App {
             const gameState = this.getGameState();
             if (gameState === END_GAME) break;
 
-            try {
-                await this.gameLoop();
-            } catch (error) {
-                throw error;
-            }
+            await this.gameLoop();
         }
 
         Console.print('게임 종료!');
+        Console.close();
     }
 
     async gameLoop() {
