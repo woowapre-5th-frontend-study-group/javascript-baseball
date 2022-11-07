@@ -193,7 +193,8 @@ class App {
     }
 
     invalidateAnswer(answer) {
-        return !(answer === '1' || answer === '2');
+        const couldBeAnswer = ['1', '2'];
+        return !couldBeAnswer.includes(answer);
     }
 }
 
