@@ -23,15 +23,223 @@ const getLogSpy = () => {
     return logSpy;
 };
 
+// let myApp = null;
+
+// beforeAll(() => {
+//     myApp = new App();
+// });
+
 describe('숫자 야구 게임', () => {
-    test('컴퓨터가 선택할 숫자 3개 정하기', () => {
-        const randoms = [1, 3, 5, 5, 8, 9];
-        mockRandoms(randoms);
+    describe('컴퓨터가 선택할 숫자 3개 정하기', () => {
+        /*
+            테스트 케이스의 목적(Proposal)
+            : 컴퓨터가 선택할 숫자 3개 정할 때, 랜덤 숫자가 중복으로 나왔을 때 제외를 하는지 확인한다.
 
-        const myApp = new App();
-        myApp.pickComputerNumber();
+            최종 확인해야 하는 예상 결과 값(Expected result)
+            : [1, 3, 5]
 
-        expect(myApp.getComputerNumbers()).toEqual([1, 3, 5]);
+            어떠한 flow를 검증할 것인지(Flow)
+            : 1이 중복이 됐을 때, 중복된 1은 넣지 않는다.
+
+            이 flow를 검증하기 위해 어떤 가정이 필요한지(Assumption about flow)
+            : pickNumberInRange에서 중복 1이 나와야 한다.
+        */
+        test('랜덤 숫자가 중복이 있게 나왔을 때', () => {
+            /*
+                step 1: given
+                    - 테스트를 위해 준비하는 과정
+                    - 테스트에 사용하는 변수, 입력 값 정의
+                    - 필요시 mock 객체 정의
+            */
+            const randoms = [1, 3, 1, 5];
+            mockRandoms(randoms);
+
+            /*
+                step 2: when
+                    - 실제로 액션을 테스트하는 과정
+                    - 한 번에 하나의 메서드만 수행하는 것이 바람직
+            */
+            const myApp = new App();
+            myApp.pickComputerNumber();
+
+            /* 
+                step 3: then
+                    - 테스트를 검증하는 과정
+                    - 예상한 값, 실제 실행을 통해 나온 값을 검증
+            */
+            const computerNumbers = myApp.getComputerNumbers();
+            expect(computerNumbers).toEqual([1, 3, 5]);
+        });
+    });
+
+    describe('게임을 시작했을 때', () => {
+        /*
+            Proposal
+            : 게임을 시작했을 때, 정해진 문구가 나오는지 확인한다.
+
+            Expected result
+            : "숫자 야구 게임을 시작합니다."
+
+            Flow
+            : -
+
+            Assumption about flow
+            : -
+        */
+        test('시작 문구 출력', async () => {
+            // 1. given
+            const logSpy = jest.spyOn(MissionUtils.Console, 'print');
+            const myApp = new App();
+            myApp.getGameState = jest.fn();
+            myApp.getGameState.mockReturnValue(false);
+
+            // 2. when
+            await myApp.play();
+
+            // 3. then
+            expect(logSpy).toHaveBeenCalledWith('숫자 야구 게임을 시작합니다.');
+        });
+    });
+
+    describe('사용자 입력 검사', () => {
+        /*
+            Proposal
+            : 사용자가 입력한 숫자가 숫자가 아닐 때, 예외를 일으키는지 확인한다.
+
+            Expected result
+            : throw new Error("inputNumber, 잘못된 값을 입력하였습니다.")
+
+            Flow
+            : 숫자가 아닌 값을 넣었을 때, 예외를 일으킨다.
+
+            Assumption about flow
+            : 입력 값으로 ['a11', '1a1', '11a', '1aa', 'a1a', 'aa1', 'aaa']를 넣는다.
+        */
+        test.only('숫자가 아닐 때', async () => {
+            // 1. given
+            expect.assertions(7);
+
+            const myApp = new App();
+            myApp.inputNumber = jest.fn();
+
+            const answers = ['a12', '1a2', '12a', '1ab', 'a1b', 'ab1', 'abc'];
+            answers.reduce((acc, value) => {
+                return acc.mockResolvedValueOnce(value);
+            }, myApp.inputNumber);
+
+            // 2. when & 3. then
+            await expect(myApp.play()).rejects.toThrow(
+                new Error('inputNumber, 잘못된 값을 입력하였습니다.')
+            );
+            // for (let i = 0; i < answers.length; i++) {
+            //     try {
+            //         await myApp.play();
+            //     } catch (e) {
+            //         expect(e).toEqual(new Error('inputNumber, 잘못된 값을 입력하였습니다.'));
+            //     }
+            // }
+        });
+
+        /*
+            Proposal
+            : 사용자가 입력한 숫자가 서로 다른 숫자가 아닐 때, 예외를 일으키는지 확인한다.
+
+            Expected result
+            : throw new Error("inputNumber, 잘못된 값을 입력하였습니다.")
+
+            Flow
+            : 서로 다른 숫자가 아닌 것을 넣었을 때, 예외를 일으킨다.
+
+            Assumption about flow
+            : 입력 값으로 ['121', '464', '444', '955']를 넣는다.
+        */
+        test('서로 다른 숫자가 아닐 때', async () => {
+            // 1. given
+            expect.assertions(4);
+
+            const myApp = new App();
+            myApp.inputNumber = jest.fn();
+
+            const answers = ['121', '464', '444', '955'];
+            answers.reduce((acc, value) => {
+                return acc.mockResolvedValueOnce(value);
+            }, myApp.inputNumber);
+
+            // 2. when & 3. then
+            for (let i = 0; i < answers.length; i++) {
+                try {
+                    await myApp.play();
+                } catch (e) {
+                    expect(e).toEqual(new Error('inputNumber, 잘못된 값을 입력하였습니다.'));
+                }
+            }
+        });
+
+        test('세 글자가 아닐 때', () => {
+            // 1. given
+            // 2. when
+            // 3. then
+        });
+
+        test('각 자리수가 1부터 9의 범위가 아닐 때', () => {
+            // 1. given
+            // 2. when
+            // 3. then
+        });
+    });
+
+    test('게임 결과_낫싱일 때', () => {
+        // 1. given
+        // 2. when
+        // 3. then
+    });
+
+    test('게임 결과_볼만 있을 때', () => {
+        // 1. given
+        // 2. when
+        // 3. then
+    });
+
+    test('게임 결과_스크라이크만 있을 때', () => {
+        // 1. given
+        // 2. when
+        // 3. then
+    });
+
+    test('게임 결과_볼과 스트라이크둘 다 있을 때', () => {
+        // 1. given
+        // 2. when
+        // 3. then
+    });
+
+    test('게임 결과_3스트라이크일 때_문구 및 질문 출력', () => {
+        // 1. given
+        // 2. when
+        // 3. then
+    });
+
+    test('게임 결과_3스트라이크일 때, 질문에 1 또는 2의 대답이 아닐 때', () => {
+        // 1. given
+        // 2. when
+        // 3. then
+    });
+
+    test('게임 결과_3스트라이크일 때_새로 시작', () => {
+        // 1. given
+        // 2. when
+        // 3. then
+    });
+
+    test('게임 결과_3스트라이크일 때_게임 종료', () => {
+        // 1. given
+        // 2. when
+        // 3. then
+    });
+
+    test('게임 결과_3스트라이크일 때_게임 종료', () => {
+        // 1. given
+        // 2. when
+        // 3. then
     });
 });
 
