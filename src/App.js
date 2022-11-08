@@ -76,7 +76,7 @@ class App {
         const numberArray = this.convertToNumberArray(inputNumber);
         this.setUserNumbers(numberArray);
 
-        // console.log(`cn: ${this._computerNumbers} / un: ${this._userNumbers}`);
+        console.log(`cn: ${this._computerNumbers} / un: ${this._userNumbers}`);
 
         const [strikeCount, ballCount] = this.compareNumbers();
         this.printHint(strikeCount, ballCount);
@@ -203,8 +203,5 @@ class App {
         return !couldBeAnswer.includes(answer);
     }
 }
-
-const myApp = new App();
-myApp.play();
 
 module.exports = App;
