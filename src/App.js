@@ -76,12 +76,14 @@ class App {
         const numberArray = this.convertToNumberArray(inputNumber);
         this.setUserNumbers(numberArray);
 
-        // console.log(`cn: ${this._computerNumbers} / un: ${this._userNumbers}`);
-
         const [strikeCount, ballCount] = this.compareNumbers();
         this.printHint(strikeCount, ballCount);
 
-        await this.checkThreeStrike(strikeCount);
+        const isThreeStrike = this.checkThreeStrike(strikeCount);
+        if (isThreeStrike) {
+            Console.print('3개의 숫자를 모두 맞히셨습니다! 게임 종료');
+            await this.toContinueOrEnd();
+        }
     }
 
     /* #region Private Methods */
@@ -94,7 +96,7 @@ class App {
             }
         }
 
-        this._computerNumbers = randomNumbers;
+        this.setComputerNumbers(randomNumbers);
     }
 
     inputNumber() {
@@ -105,22 +107,28 @@ class App {
 
     invalidateNumber(numbers) {
         return !(
-            this._isNumber(numbers) &&
-            this._hasNoDuplication(numbers) &&
-            this._isThreeNumber(numbers) &&
-            this._isInRangeFromOneToNine(numbers)
+            this.isNumber(numbers) &&
+            this.hasNoDuplication(numbers) &&
+            this.isThreeNumber(numbers) &&
+            this.isInRangeFromOneToNine(numbers)
         );
     }
 
-    _isNumber = (source) => !isNaN(parseInt(source, 10));
+    isNumber(source) {
+        return !isNaN(parseInt(source, 10));
+    }
 
-    _hasNoDuplication = (numbers) =>
-        ![...numbers].some((number) => numbers.split(number).length > 2);
+    hasNoDuplication(numbers) {
+        return ![...numbers].some((number) => numbers.split(number).length > 2);
+    }
 
-    _isThreeNumber = (numbers) => numbers.length === 3;
+    isThreeNumber(numbers) {
+        return numbers.length === 3;
+    }
 
-    _isInRangeFromOneToNine = (numbers) =>
-        [...numbers].every((number) => +number >= 1 && +number <= 9);
+    isInRangeFromOneToNine(numbers) {
+        return [...numbers].every((number) => +number >= 1 && +number <= 9);
+    }
 
     convertToNumberArray(array) {
         return [...array].map((item) => +item);
@@ -170,14 +178,12 @@ class App {
     }
     /* #endregion */
 
-    async checkThreeStrike(strikeCount) {
+    checkThreeStrike(strikeCount) {
         const THREE_STRIKE = 3;
-        if (strikeCount !== THREE_STRIKE) {
-            return;
-        }
+        return strikeCount === THREE_STRIKE;
+    }
 
-        Console.print('3개의 숫자를 모두 맞히셨습니다! 게임 종료');
-
+    async toContinueOrEnd() {
         const inputToContinueGame = await this.inputToContinueGame();
         const isInvalidatedAnswer = this.invalidateAnswer(inputToContinueGame);
         if (isInvalidatedAnswer) {
@@ -203,5 +209,8 @@ class App {
         return !couldBeAnswer.includes(answer);
     }
 }
+
+const myApp = new App();
+myApp.play();
 
 module.exports = App;
