@@ -210,7 +210,4 @@ class App {
     }
 }
 
-const myApp = new App();
-myApp.play();
-
 module.exports = App;
