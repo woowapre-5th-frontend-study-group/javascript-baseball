@@ -13,11 +13,9 @@ const Validator = {
   },
 
   playerOption(option) {
-    let isValid = false;
+    if (option === OPTION.restart || option === OPTION.exit) return;
 
-    if (option === OPTION.restart || option === OPTION.exit) isValid = true;
-
-    if (!isValid) Quit.withException(ERROR_MESSAGE.option);
+    Quit.withException(ERROR_MESSAGE.option);
   },
 
   checkNumber(playerAnswer) {
