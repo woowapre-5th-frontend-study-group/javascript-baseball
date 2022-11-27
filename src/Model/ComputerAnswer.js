@@ -23,9 +23,6 @@ class ComputerAnswer {
     this.#setValue();
   }
 
-  // 메서드 명이 최선인가?
-  // 볼과 스트라이크의 개수를 리턴하는 다른 메서드를 만드는 것이 좋은가?
-  // 좋다면 그 메서드명은 무엇이 좋은가?
   comparePlayerAnswer(playerAnswer) {
     let ballCount = 0;
     let strikeCount = 0;
