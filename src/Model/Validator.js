@@ -7,7 +7,7 @@ const Validator = {
 
     this.checkThreeLength(playerAnswer);
 
-    this.checkNotIncludesZero(playerAnswer);
+    this.checkIncludesZero(playerAnswer);
 
     this.checkNotOverlap(playerAnswer);
   },
@@ -26,7 +26,7 @@ const Validator = {
     if (playerAnswer.length !== 3) Quit.withException(ERROR_MESSAGE.length);
   },
 
-  checkNotIncludesZero(playerAnswer) {
+  checkIncludesZero(playerAnswer) {
     if (playerAnswer.includes('0'))
       Quit.withException(ERROR_MESSAGE.includesZero);
   },
