@@ -19,7 +19,8 @@ const Validator = {
   },
 
   checkNumber(playerAnswer) {
-    if (isNaN(playerAnswer)) Quit.withException(ERROR_MESSAGE.isNotNumber);
+    if (Number.isNaN(playerAnswer))
+      Quit.withException(ERROR_MESSAGE.isNotNumber);
   },
 
   checkThreeLength(playerAnswer) {
