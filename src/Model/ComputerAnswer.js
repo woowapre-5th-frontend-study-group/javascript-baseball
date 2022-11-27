@@ -15,8 +15,6 @@ class ComputerAnswer {
     }
 
     this.#value = numberArr.join('');
-
-    console.log(this.#value);
   }
 
   resetValue() {

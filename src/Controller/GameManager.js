@@ -13,7 +13,7 @@ class GameManager {
   }
 
   #start() {
-    OutputView.printMessage(MESSAGE.START);
+    OutputView.printMessage(MESSAGE.start);
     this.#play();
   }
 
@@ -44,7 +44,7 @@ class GameManager {
   }
 
   #actionAboutCommand(option) {
-    if (option === OPTION.RESTART) return this.#restart();
+    if (option === OPTION.restart) return this.#restart();
 
     return Quit.game();
   }

@@ -1,5 +1,5 @@
 const Quit = require('../libs/Quit');
-const { OPTION, ERROR_MESSAGE } = require('../libs/const');
+const { OPTION, ERROR_MESSAGE } = require('../libs/Const');
 
 const Validator = {
   playerAnswer(playerAnswer) {
@@ -15,29 +15,27 @@ const Validator = {
   playerOption(option) {
     let isValid = false;
 
-    if (option === OPTION.RESTART || option === OPTION.EXIT) isValid = true;
+    if (option === OPTION.restart || option === OPTION.exit) isValid = true;
 
-    if (!isValid) Quit.withException(ERROR_MESSAGE.OPTION);
+    if (!isValid) Quit.withException(ERROR_MESSAGE.option);
   },
 
   checkNumber(playerAnswer) {
-    if (isNaN(playerAnswer))
-      Quit.withException('[ERROR] 숫자만 입력 가능합니다.');
+    if (isNaN(playerAnswer)) Quit.withException(ERROR_MESSAGE.isNotNumber);
   },
 
   checkThreeLength(playerAnswer) {
-    if (playerAnswer.length !== 3)
-      Quit.withException('[ERROR] 숫자 3개를 입력해야 합니다.');
+    if (playerAnswer.length !== 3) Quit.withException(ERROR_MESSAGE.length);
   },
 
   checkNotIncludesZero(playerAnswer) {
     if (playerAnswer.includes('0'))
-      Quit.withException('[ERROR] 0은 입력할 수 없습니다.');
+      Quit.withException(ERROR_MESSAGE.includesZero);
   },
 
   checkNotOverlap(playerAnswer) {
     if ([...new Set([...(playerAnswer + '')])].length !== 3)
-      Quit.withException('[ERROR] 중복된 숫자를 입력할 수 없습니다.');
+      Quit.withException(ERROR_MESSAGE.overlap);
   },
 };
 
