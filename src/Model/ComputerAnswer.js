@@ -4,21 +4,22 @@ class ComputerAnswer {
   #value;
 
   constructor() {
-    this.#setValue();
+    this.#createValue();
   }
 
-  #setValue() {
-    const numberArr = [];
-    while (numberArr.length < 3) {
-      const number = Random.pickNumberInRange(1, 9);
-      if (!numberArr.includes(number)) numberArr.push(number);
+  #createValue() {
+    let numbers = [];
+    while (numbers.length < 3) {
+      const num = Random.pickNumberInRange(1, 9);
+      numbers.push(num);
+      numbers = [...new Set(numbers)];
     }
 
-    this.#value = numberArr.join('');
+    this.#value = numbers.join('');
   }
 
   resetValue() {
-    this.#setValue();
+    this.#createValue();
   }
 
   comparePlayerAnswer(playerAnswer) {
