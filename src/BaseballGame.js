@@ -38,9 +38,9 @@ class BaseBallGame {
     return this.#count;
   }
 
-  #calculateCount(palyerNumber, palyerNumberIndex) {
-    if (!this.#answerNumbers.has(palyerNumber)) return;
-    if (this.#isStrike({ palyerNumber, palyerNumberIndex })) {
+  #calculateCount(playerNumber, playerNumberIndex) {
+    if (!this.#answerNumbers.has(playerNumber)) return;
+    if (this.#isStrike({ playerNumber, playerNumberIndex })) {
       return (this.#count.strike += 1);
     }
     this.#count.ball += 1;
@@ -69,9 +69,9 @@ class BaseBallGame {
     this.#count = { ...COUNT.initialization };
   }
 
-  #isStrike({ palyerNumber, palyerNumberIndex }) {
+  #isStrike({ playerNumber, playerNumberIndex }) {
     const answerNumbers = [...this.#answerNumbers];
-    return answerNumbers[palyerNumberIndex] === palyerNumber;
+    return answerNumbers[playerNumberIndex] === playerNumber;
   }
 }
 
