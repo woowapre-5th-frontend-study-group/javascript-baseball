@@ -1,6 +1,6 @@
 const { Console } = require("@woowacourse/mission-utils");
 const BaseballGame = require("./BaseballGame");
-const { COMMAND } = require("./constants/game");
+const { COMMAND, COUNT } = require("./constants/game");
 
 const InputView = require("./view/InputView");
 const OutputView = require("./view/OutputView");
@@ -22,19 +22,14 @@ class App {
   }
 
   readPlayerInput() {
-    InputView.readPlayerInput(this.actionPlayerInput.bind(this));
+    InputView.readPlayerInput(this.compareAnswer.bind(this));
   }
 
-  actionPlayerInput(threeDigistsNumber) {
-    this.baseballGame.setPlayerNumbers(threeDigistsNumber);
+  compareAnswer(threeDigistsNumber) {
+    const count = this.baseballGame.getCount(threeDigistsNumber);
+    OutputView.printCountResult(count);
 
-    this.compareAnswer();
-  }
-
-  compareAnswer() {
-    OutputView.printCountResult(this.baseballGame.getCount());
-
-    if (this.baseballGame.isAnswer()) {
+    if (count.strike === COUNT.out) {
       OutputView.printGameSuccess();
       this.readGameCommand();
       return;

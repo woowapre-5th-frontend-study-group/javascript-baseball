@@ -8,42 +8,27 @@ class BaseBallGame {
    */
   #answerNumbers;
 
-  /**
-   * 플레이어 입력 숫자
-   * @type {number[]}
-   */
-  #playerNumbers;
-
-  /**
-   * 볼 스트라이크 개수
-   * @type  {{ ball: number, strike: number }}
-   */
-  #count;
-
   setAnswerNumbers() {
     this.#answerNumbers = this.#createRandomUniqueNumberList();
   }
 
-  setPlayerNumbers(playerNumbers) {
-    this.#playerNumbers = playerNumbers.split("").map(Number);
+  getCount(playerNumbers) {
+    let strike = 0;
+    let ball = 0;
+    this.#setPlayerNumbers(playerNumbers).forEach(
+      (playerNumber, playerNumberIndex) => {
+        if (!this.#answerNumbers.has(playerNumber)) return;
+        if (this.#isStrike({ playerNumber, playerNumberIndex })) {
+          return (strike += 1);
+        }
+        ball += 1;
+      }
+    );
+    return { strike, ball };
   }
 
-  isAnswer() {
-    return this.#count.strike === COUNT.out;
-  }
-
-  getCount() {
-    this.#resetCount();
-    this.#playerNumbers.forEach(this.#calculateCount.bind(this));
-    return this.#count;
-  }
-
-  #calculateCount(playerNumber, playerNumberIndex) {
-    if (!this.#answerNumbers.has(playerNumber)) return;
-    if (this.#isStrike({ playerNumber, playerNumberIndex })) {
-      return (this.#count.strike += 1);
-    }
-    this.#count.ball += 1;
+  #setPlayerNumbers(playerNumbers) {
+    return playerNumbers.split("").map(Number);
   }
 
   #createRandomUniqueNumberList() {
@@ -62,10 +47,6 @@ class BaseBallGame {
       RANDOM_LOWER_INCLUSIVE,
       RANDOM_UPPER_INCLUSIVE
     );
-  }
-
-  #resetCount() {
-    this.#count = { ...COUNT.initialization };
   }
 
   #isStrike({ playerNumber, playerNumberIndex }) {

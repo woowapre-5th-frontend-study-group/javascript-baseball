@@ -30,21 +30,8 @@ describe("BaseBallGame Class test", () => {
 
     playerInputValues.forEach((playerInputValue, index) => {
       const count = counts[index];
-      baseballGame.setPlayerNumbers(playerInputValue);
 
-      expect(baseballGame.getCount()).toEqual(count);
+      expect(baseballGame.getCount(playerInputValue)).toEqual(count);
     });
-  });
-
-  test("정답인 경우 테스트", () => {
-    const randoms = [1, 2, 3];
-    mockRandoms(randoms);
-
-    const baseballGame = new BaseBallGame();
-    baseballGame.setAnswerNumbers();
-    baseballGame.setPlayerNumbers("123");
-    baseballGame.getCount();
-
-    expect(baseballGame.isAnswer()).toBeTruthy();
   });
 });
