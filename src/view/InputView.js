@@ -12,7 +12,7 @@ const InputView = {
 
   readGameCommand(actionGameCommand) {
     Console.readLine(INPUT_MESSAGE.restart, (gameCommand) => {
-      Validation.checkGameCommnad(gameCommand);
+      Validation.checkGameCommand(gameCommand);
       actionGameCommand(gameCommand);
     });
   },

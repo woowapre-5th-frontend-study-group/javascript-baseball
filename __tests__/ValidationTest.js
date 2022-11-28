@@ -16,7 +16,7 @@ describe("Validation Test", () => {
 
     incorrectGameCommnads.forEach((incorrectGameCommnad) => {
       expect(() => {
-        Validation.checkGameCommnad(incorrectGameCommnad);
+        Validation.checkGameCommand(incorrectGameCommnad);
       }).toThrow();
     });
   });
