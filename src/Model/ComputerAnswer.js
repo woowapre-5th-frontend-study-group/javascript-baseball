@@ -8,14 +8,13 @@ class ComputerAnswer {
   }
 
   #createValue() {
-    let numbers = [];
-    while (numbers.length < 3) {
+    let numbers = new Set();
+    while (numbers.size < 3) {
       const num = Random.pickNumberInRange(1, 9);
-      numbers.push(num);
-      numbers = [...new Set(numbers)];
+      numbers.add(num);
     }
 
-    this.#value = numbers.join('');
+    this.#value = [...numbers].join('');
   }
 
   resetValue() {
