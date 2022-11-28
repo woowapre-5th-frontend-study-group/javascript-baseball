@@ -52,7 +52,6 @@ class BaseBallGame {
       const randomNumber = this.#randomNumberGenerate();
       randomUniqueNumberList.add(randomNumber);
     }
-    console.log(randomUniqueNumberList);
     return randomUniqueNumberList;
   }
 
