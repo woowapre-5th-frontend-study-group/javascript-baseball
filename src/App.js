@@ -1,7 +1,7 @@
 const GameCore = require("./Domains/GameCore");
 const Scenes = require("./Scenes");
 
-class App2 {
+class App {
   constructor() {
     GameCore.addScene(Scenes.IntroScene)
       .addScene(Scenes.CreateAnswerScene)
@@ -16,4 +16,4 @@ class App2 {
   }
 }
 
-module.exports = App2;
+module.exports = App;
