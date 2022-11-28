@@ -1,5 +1,5 @@
 const { Random } = require("@woowacourse/mission-utils");
-const { COUNT, NUMBER_DIGITS } = require("./constants/game");
+const { NUMBER_DIGITS } = require("./constants/game");
 
 class BaseBallGame {
   /**
@@ -7,10 +7,6 @@ class BaseBallGame {
    * @type {Set<number>}
    */
   #answerNumbers;
-
-  setAnswerNumbers() {
-    this.#answerNumbers = this.#createRandomUniqueNumberList();
-  }
 
   getCount(playerNumbers) {
     let strike = 0;
@@ -25,6 +21,10 @@ class BaseBallGame {
       }
     );
     return { strike, ball };
+  }
+
+  createAnswerNumbers() {
+    this.#answerNumbers = this.#createRandomUniqueNumberList();
   }
 
   #setPlayerNumbers(playerNumbers) {

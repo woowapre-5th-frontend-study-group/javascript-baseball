@@ -16,7 +16,7 @@ class App {
   }
 
   start() {
-    this.baseballGame.setAnswerNumbers();
+    this.baseballGame.createAnswerNumbers();
 
     this.readPlayerInput();
   }

@@ -26,7 +26,7 @@ describe("BaseBallGame Class test", () => {
 
     mockRandoms(randoms);
     const baseballGame = new BaseBallGame();
-    baseballGame.setAnswerNumbers();
+    baseballGame.createAnswerNumbers();
 
     playerInputValues.forEach((playerInputValue, index) => {
       const count = counts[index];
