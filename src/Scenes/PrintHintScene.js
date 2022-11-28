@@ -5,8 +5,6 @@ const { SCENE, BASEBALL } = require("../Constants");
 
 const PrintHintScene = {
   start() {
-    console.log(GameState.getAnswerGong());
-
     const compareResult = GameState.getCompareResult();
     OutputView.printHint(compareResult);
 

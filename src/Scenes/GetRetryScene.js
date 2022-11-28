@@ -2,13 +2,14 @@ const InputView = require("../Views/InputView");
 const ExceptionHandler = require("../Utils/ExceptionHandler");
 const GameCore = require("../Domains/GameCore");
 const { SCENE, INPUT_TYPE, GAME_COMMAND } = require("../Constants");
+const OutputView = require("../Views/OutputView");
 
 const GetRetryScene = {
   start() {
-    InputView.questionRetry(GetRetryScene.testCallback);
+    InputView.questionRetry(GetRetryScene.nextCallback);
   },
 
-  testCallback(inputedValue) {
+  nextCallback(inputedValue) {
     const validateResult = ExceptionHandler.tryValidate(
       inputedValue,
       INPUT_TYPE.GAME_COMMAND
@@ -24,6 +25,7 @@ const GetRetryScene = {
       [GAME_COMMAND.EXIT]: SCENE.Outro,
     };
 
+    OutputView.addNewLine();
     GameCore.playScene(nextScene[inputedValue]);
   },
 };

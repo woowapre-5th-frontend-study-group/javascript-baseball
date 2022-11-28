@@ -1,14 +1,15 @@
 const GameCore = require("../Domains/GameCore");
 const GameState = require("../Domains/GameState");
 const { makeAnswerGongNumbers } = require("../Utils/Utils.js");
+const { SCENE } = require("../Constants");
 
 const CreateAnswerScene = {
   start() {
     const gongNumbers = makeAnswerGongNumbers();
     GameState.setAnswerGong(gongNumbers);
 
-    // GameCore.playScene(SCENE.GetNumber);
-    GameCore.nextScene();
+    // GameCore.nextScene();
+    GameCore.playScene(SCENE.GetNumber);
   },
 };
 
