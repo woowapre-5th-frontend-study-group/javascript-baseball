@@ -1,5 +1,6 @@
 const OutputView = require('../View/OutputView');
 const InputView = require('../View/InputView');
+const ComputerAnswer = require('../Model/ComputerAnswer');
 const Validator = require('../Model/Validator');
 const Quit = require('../libs/Quit');
 const { MESSAGE, OPTION } = require('../libs/const');
@@ -7,8 +8,8 @@ const { MESSAGE, OPTION } = require('../libs/const');
 class GameManager {
   #computerAnswer;
 
-  constructor(compuerAnswer) {
-    this.#computerAnswer = compuerAnswer;
+  constructor() {
+    this.#computerAnswer = new ComputerAnswer();
     this.#start();
   }
 
@@ -30,9 +31,9 @@ class GameManager {
   }
 
   #actionAboutPlayerAnswer(playerAnswer) {
-    if (this.#computerAnswer.isThreeStrike(playerAnswer)) return this.#end();
+    if (this.#computerAnswer.isThreeStrike(playerAnswer)) this.#end();
 
-    return this.#play();
+    this.#play();
   }
 
   #end() {

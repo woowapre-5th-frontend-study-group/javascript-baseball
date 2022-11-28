@@ -1,9 +1,8 @@
-const ComputerAnswer = require('./Model/ComputerAnswer');
 const GameManager = require('./Controller/GameManager');
 
 class App {
   play() {
-    new GameManager(new ComputerAnswer());
+    new GameManager();
   }
 }
 
