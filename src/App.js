@@ -18,14 +18,14 @@ class App {
   start() {
     this.baseballGame.setAnswerNumbers();
 
-    this.readBridgeSize();
+    this.readPlayerInput();
   }
 
-  readBridgeSize() {
-    InputView.readBridgeSize(this.actionBrridgeSize.bind(this));
+  readPlayerInput() {
+    InputView.readPlayerInput(this.actionPlayerInput.bind(this));
   }
 
-  actionBrridgeSize(threeDigistsNumber) {
+  actionPlayerInput(threeDigistsNumber) {
     this.baseballGame.setPlayerNumbers(threeDigistsNumber);
 
     this.compareAnswer();
@@ -40,7 +40,7 @@ class App {
       return;
     }
 
-    this.readBridgeSize();
+    this.readPlayerInput();
   }
 
   readGameCommand() {

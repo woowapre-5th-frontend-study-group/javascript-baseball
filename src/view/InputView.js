@@ -3,10 +3,10 @@ const { INPUT_MESSAGE } = require("../constants/messages");
 const Validation = require("../Validation");
 
 const InputView = {
-  readBridgeSize(actionBrridgeSize) {
+  readPlayerInput(actionPlayerInput) {
     Console.readLine(INPUT_MESSAGE.playerInput, (threeDigistsNumber) => {
       Validation.checkPlayerInputValue(threeDigistsNumber);
-      actionBrridgeSize(threeDigistsNumber);
+      actionPlayerInput(threeDigistsNumber);
     });
   },
 
