@@ -33,7 +33,7 @@ const Validator = {
   },
 
   checkNotOverlap(playerAnswer) {
-    if ([...new Set([...(playerAnswer + '')])].length !== 3)
+    if (new Set([...(playerAnswer + '')]).size !== 3)
       Quit.withException(ERROR_MESSAGE.overlap);
   },
 };
