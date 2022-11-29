@@ -1,3 +1,4 @@
+/** View Import */
 const OutputView = require("../Views/OutputView");
 
 const OutroScene = {
