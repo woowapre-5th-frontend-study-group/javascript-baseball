@@ -1,8 +1,15 @@
-const InputView = require("../Views/InputView");
-const ExceptionHandler = require("../Utils/ExceptionHandler");
+/** 게임코어 import */
 const GameCore = require("../Domains/GameCore");
-const { SCENE, INPUT_TYPE, GAME_COMMAND } = require("../Constants");
+
+/** View Import */
+const InputView = require("../Views/InputView");
 const OutputView = require("../Views/OutputView");
+
+/** 유틸 import */
+const ExceptionHandler = require("../Utils/ExceptionHandler");
+
+/** 상수 import */
+const { SCENE, INPUT_TYPE, GAME_COMMAND } = require("../Constants");
 
 const GetRetryScene = {
   start() {
