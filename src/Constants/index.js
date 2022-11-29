@@ -28,6 +28,11 @@ const Constants = {
     NULL: "",
     DELIMITER: " ",
     THREE_STRIKE: 3,
+
+    VALIDATION: {
+      INCLUSIVE_LOWER: 1,
+      INCLUSIVE_UPPER: 9,
+    },
   },
 
   ERROR: {
