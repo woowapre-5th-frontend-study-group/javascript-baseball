@@ -2,7 +2,7 @@
 const Validator = require("./Validator");
 
 /** 유틸 import */
-const { convertToNumber } = require("./Utils");
+const { convertToNumber, convertToNumberArray } = require("./Utils");
 
 /* #region Private Method 정의 */
 /**
@@ -46,6 +46,10 @@ function isNumberic(value) {
  */
 function isSame(valueA, valueB) {
   return valueA === valueB;
+}
+
+function isInRange(value, inclusiveLower, inclusiveUpper) {
+  return value >= inclusiveLower && inclusiveUpper >= value;
 }
 /* #endregion */
 
@@ -103,6 +107,24 @@ class ValidatorNumber extends Validator {
     const dataArray = [...this.#data];
     const exclusiveSet = new Set(dataArray);
     if (!isSame(exclusiveSet.size, dataArray.length)) this.#error = true;
+
+    return this;
+  }
+
+  /**
+   *
+   * @param {number} inclusiveLower
+   * @param {number} inclusiveUpper
+   * @returns
+   */
+  shouldBeInRange(inclusiveLower, inclusiveUpper) {
+    const dataArray = convertToNumberArray(this.#data);
+    for (let data of dataArray) {
+      if (!isInRange(data, inclusiveLower, inclusiveUpper)) {
+        this.#error = true;
+        break;
+      }
+    }
 
     return this;
   }
