@@ -1,4 +1,7 @@
+/** 유틸 import */
 const { Console } = require("@woowacourse/mission-utils");
+
+/** 상수 import */
 const Constants = require("../Constants");
 
 const OutputView = {
