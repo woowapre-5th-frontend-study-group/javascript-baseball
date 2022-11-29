@@ -1,5 +1,10 @@
-const Validation = require("./Validation");
+/** View Import */
 const OutputView = require("../Views/OutputView");
+
+/** 유틸 import */
+const Validation = require("./Validation");
+
+/** 상수 import */
 const { INPUT_TYPE } = require("../Constants");
 
 /** 유효성 검사 클래스에서 발생하는 예외를 처리하는 역할 */
