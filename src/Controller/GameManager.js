@@ -19,15 +19,17 @@ class GameManager {
   }
 
   #play() {
-    InputView.readPlayerAnswer((playerAnswer) => {
-      Validator.playerAnswer(playerAnswer);
+    InputView.readPlayerAnswer(this.#handlePlayerAnswer.bind(this));
+  }
 
-      OutputView.printResult(
-        this.#computerAnswer.comparePlayerAnswer(playerAnswer)
-      );
+  #handlePlayerAnswer(playerAnswer) {
+    Validator.playerAnswer(playerAnswer);
 
-      this.#actionAboutPlayerAnswer(playerAnswer);
-    });
+    OutputView.printResult(
+      this.#computerAnswer.comparePlayerAnswer(playerAnswer)
+    );
+
+    this.#actionAboutPlayerAnswer(playerAnswer);
   }
 
   #actionAboutPlayerAnswer(playerAnswer) {
@@ -37,11 +39,13 @@ class GameManager {
   }
 
   #end() {
-    InputView.readCommand((option) => {
-      Validator.playerOption(option);
+    InputView.readCommand(this.#handleCommand.bind(this));
+  }
 
-      this.#actionAboutCommand(option);
-    });
+  #handleCommand(option) {
+    Validator.playerOption(option);
+
+    this.#actionAboutCommand(option);
   }
 
   #actionAboutCommand(option) {

@@ -1,5 +1,5 @@
 const { Console } = require('@woowacourse/mission-utils');
-const { OUTPUT, MESSAGE } = require('../libs/Const');
+const { OUTPUT, MESSAGE, STRIKE_COUNT } = require('../libs/Const');
 
 class OutputView {
   static printMessage(message) {
@@ -14,7 +14,7 @@ class OutputView {
 
     this.#printBallAndStrikeCount(ballCount, strikeCount);
 
-    if (strikeCount === 3) Console.print(MESSAGE.success);
+    if (strikeCount === STRIKE_COUNT) Console.print(MESSAGE.success);
   }
 
   static #printBallAndStrikeCount(ballCount, strikeCount) {

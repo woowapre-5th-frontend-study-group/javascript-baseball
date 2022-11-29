@@ -24,9 +24,12 @@ const OUTPUT = {
   strike: '스트라이크',
 };
 
+const STRIKE_COUNT = 3;
+
 module.exports = {
   MESSAGE,
   OPTION,
   OUTPUT,
   ERROR_MESSAGE,
+  STRIKE_COUNT,
 };
