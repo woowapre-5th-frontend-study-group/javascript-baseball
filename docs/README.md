@@ -1,6 +1,4 @@
-<center>
 ![우테코 2주차_야구게임_리팩토링_순서도](https://user-images.githubusercontent.com/48979587/204450072-bd676315-a029-4860-90cb-ca97acf5e160.jpg)
-</center>
  
 # 리팩토링
 
