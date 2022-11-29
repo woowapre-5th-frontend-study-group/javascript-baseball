@@ -1,3 +1,4 @@
+/** 필요한 Scene import */
 const IntroScene = require("./IntroScene");
 const CreateAnswerScene = require("./CreateAnswerScene");
 const GetNumberScene = require("./GetNumberScene");
