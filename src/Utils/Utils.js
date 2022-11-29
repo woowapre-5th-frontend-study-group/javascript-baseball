@@ -1,5 +1,9 @@
-const { Random } = require("@woowacourse/mission-utils");
-
+/**
+ * 숫자로 변환한다.
+ *
+ * @param {number|string} value
+ * @returns {number}
+ */
 function convertToNumber(value) {
   if (typeof value === "number") {
     return value;
@@ -11,30 +15,18 @@ function convertToNumber(value) {
 }
 
 /**
+ * 숫자 Array를 반환한다.
  *
  * @param {string} value
- * @returns
+ * @returns {Array<number>}
  */
 function convertToNumberArray(value) {
   return value.split("").map((item) => convertToNumber(item));
 }
 
-function makeAnswerGongNumbers() {
-  const computer = [];
-  while (computer.length < 3) {
-    const number = Random.pickNumberInRange(1, 9);
-    if (!computer.includes(number)) {
-      computer.push(number);
-    }
-  }
-
-  return computer;
-}
-
 const Utils = {
   convertToNumber,
   convertToNumberArray,
-  makeAnswerGongNumbers,
 };
 
 module.exports = Utils;
