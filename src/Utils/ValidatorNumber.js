@@ -1,5 +1,53 @@
+/** Validator 구현을 위한 추상 클래스 Import */
 const Validator = require("./Validator");
+
+/** 유틸 import */
 const { convertToNumber } = require("./Utils");
+
+/* #region Private Method 정의 */
+/**
+ * 빈 값인지 확인한다.
+ *
+ * @param {string} value
+ * @returns {boolean}
+ */
+function isEmpty(value) {
+  return value === "";
+}
+
+/**
+ * 길이가 3인지 확인한다.
+ *
+ * @param {string} value
+ * @returns {boolean}
+ */
+function isLengthThree(value) {
+  return [...value].length === 3;
+}
+
+/**
+ * 숫자인지 확인한다.
+ *
+ * @param {any} value
+ * @returns {boolean}
+ */
+function isNumberic(value) {
+  return (
+    typeof value === "number" && !Number.isNaN(value) && Number.isFinite(value)
+  );
+}
+
+/**
+ * A와 B가 같은지 확인한다.
+ *
+ * @param {any} valueA
+ * @param {any} valueB
+ * @returns {boolean}
+ */
+function isSame(valueA, valueB) {
+  return valueA === valueB;
+}
+/* #endregion */
 
 /** 책임 연쇄 패턴(chain of responsibility)을 적용한 유효성 검사 클래스 */
 class ValidatorNumber extends Validator {
@@ -32,37 +80,29 @@ class ValidatorNumber extends Validator {
 
   /** 비어있지 않아야 한다. */
   shouldBeNotEmpty() {
-    if (this.#data === "") this.#error = true;
+    if (isEmpty(this.#data)) this.#error = true;
     return this;
   }
 
   /** 길이가 3이여야 한다. */
   shouldBeThree() {
-    if ([...this.#data].length !== 3) this.#error = true;
+    if (!isLengthThree(this.#data)) this.#error = true;
     return this;
   }
 
   /** 숫자여야 한다. */
   shouldBeNumberic() {
     const convetedData = convertToNumber(this.#data);
-
-    if (
-      typeof convetedData !== "number" ||
-      Number.isNaN(convetedData) ||
-      !Number.isFinite(convetedData)
-    ) {
-      this.#error = true;
-    }
+    if (!isNumberic(convetedData)) this.#error = true;
 
     return this;
   }
 
   /** 서로 다른 숫자(배타적)이어야 한다. */
   shouldBeExclusive() {
-    const exclusiveSet = new Set([...this.#data]);
-    if (exclusiveSet.size !== [...this.#data].length) {
-      this.#error = true;
-    }
+    const dataArray = [...this.#data];
+    const exclusiveSet = new Set(dataArray);
+    if (!isSame(exclusiveSet.size, dataArray.length)) this.#error = true;
 
     return this;
   }
