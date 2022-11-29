@@ -1,3 +1,4 @@
+/** 공에 대한 모델 */
 class Gong {
   /** @type {Set<number>} */
   #myGong;
@@ -8,6 +9,7 @@ class Gong {
   }
 
   /**
+   * Index에 맞는 숫자를 반환한다.
    *
    * @param {number} index
    * @returns {number}
@@ -16,11 +18,16 @@ class Gong {
     return [...this.#myGong][index];
   }
 
+  /**
+   * 숫자를 반환한다.
+   * @returns {Array<number>}
+   */
   getGongNumbers() {
     return [...this.#myGong];
   }
 
   /**
+   * 해당 숫자가 포함되어 있는지 반환한다.
    *
    * @param {number} number 확인할 숫자
    * @returns {boolean}
@@ -30,7 +37,7 @@ class Gong {
   }
 
   /**
-   * index에 있는 숫자가 정확히 그 숫자
+   * index에 있는 숫자가 정확히 그 숫자인지 비교한다.
    *
    * @param {number} gongNumber
    * @param {number} index
@@ -41,6 +48,7 @@ class Gong {
   }
 
   /**
+   * 입력받은 인수와 비교하여 볼과 스트라이크 갯수를 반환한다.
    *
    * @param {Gong} anotherGong
    * @returns {{ballCount: number, strikeCount: number}}
