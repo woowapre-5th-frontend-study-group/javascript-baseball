@@ -1,3 +1,4 @@
+/** Validator 구현을 위한 추상 클래스 Import */
 const Validator = require("./Validator");
 
 /** 책임 연쇄 패턴(chain of responsibility)을 적용한 유효성 검사 클래스 */
