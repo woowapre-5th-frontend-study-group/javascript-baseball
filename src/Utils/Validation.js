@@ -3,7 +3,7 @@ const ValidatorGameCommand = require("./ValidatorGameCommand");
 const ValidatorNumber = require("./ValidatorNumber");
 
 /** 상수 import */
-const { ERROR, GAME_COMMAND } = require("../Constants");
+const { ERROR, BASEBALL, GAME_COMMAND } = require("../Constants");
 
 /** 각 상황에 맞는 조건을 생성하고 검사하는 역할 */
 const Validation = {
@@ -14,6 +14,8 @@ const Validation = {
    * @throws 앞선 조건들에 만족하지 않으면 throw를 발생
    */
   validateNumber(value) {
+    const { INCLUSIVE_LOWER, INCLUSIVE_UPPER } = BASEBALL.VALIDATION;
+
     new ValidatorNumber(value)
       .shouldBeNotEmpty()
       .withMessage(ERROR.NOT_EMPTY)
@@ -22,7 +24,9 @@ const Validation = {
       .shouldBeNumberic()
       .withMessage(ERROR.NOT_NUMBERIC)
       .shouldBeExclusive()
-      .withMessage(ERROR.NOT_EXCLUSIVE);
+      .withMessage(ERROR.NOT_EXCLUSIVE)
+      .shouldBeInRange(INCLUSIVE_LOWER, INCLUSIVE_UPPER)
+      .withMessage(ERROR.NOT_IN_RANGE);
   },
 
   /**
