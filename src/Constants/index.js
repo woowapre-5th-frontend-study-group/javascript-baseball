@@ -38,6 +38,7 @@ const Constants = {
     NOT_EXCLUSIVE: "서로 다른 3자리 숫자를 입력해주세요.",
     NOT_ONE_INPUT: "1(새로 시작), 또는 2(종료)의 값을 하나만 입력해주세요.",
     NOT_ONE: "1(새로 시작), 또는 2(종료)의 값만 입력해주세요.",
+    NOT_IN_RANGE: "1부터 9사이의 값을 입력해주세요.",
   },
 
   INPUT_TYPE: {
