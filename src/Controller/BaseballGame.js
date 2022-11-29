@@ -4,16 +4,21 @@ const InputView = require('../View/InputView');
 const OutputView = require('../View/OutputView');
 const Validator = require('../Model/Validator');
 const { OPTION, NUMBER } = require('../Util/Constants');
+const Computer = require('../Model/Computer');
 
-class GameController {
+class BaseballGame {
   #computer;
 
   constructor(computer) {
-    this.#computer = computer;
+    this.#computer = new Computer();
   }
 
   start() {
     OutputView.printStart();
+    this.setGameNumber();
+  }
+
+  setGameNumber() {
     this.#computer.setCorrectNumbers();
     this.requestNumber();
   }
@@ -32,8 +37,8 @@ class GameController {
     this.showNext(trial);
   }
 
-  showNext(trial) {
-    if (trial.strike === NUMBER.COUNT) {
+  showNext({ strike }) {
+    if (strike === NUMBER.DIGITS) {
       OutputView.printSuccess();
       return this.requestRetry();
     }
@@ -43,11 +48,15 @@ class GameController {
   requestRetry() {
     InputView.readCommand((userInput) => {
       Validator.validateOption(userInput);
-      if (userInput === OPTION.RESTART) return this.start();
-      if (userInput === OPTION.END) return Console.close();
+      if (userInput === OPTION.RESTART) return this.setGameNumber();
+      if (userInput === OPTION.END) return this.end();
     });
+  }
+
+  end() {
+    Console.close();
   }
 }
 
-module.exports = GameController;
+module.exports = BaseballGame;
 

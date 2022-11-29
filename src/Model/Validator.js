@@ -2,9 +2,9 @@ const { ERROR, OPTION, NUMBER } = require('../Util/Constants');
 
 const Validator = {
   validateNumber(userInput) {
-    Validator.validateValue(userInput);
-    Validator.validateLength(userInput);
-    Validator.validateDuplicate(userInput);
+    this.validateValue(userInput);
+    this.validateLength(userInput);
+    this.validateDuplicate(userInput);
   },
 
   validateValue(userInput) {
@@ -16,7 +16,7 @@ const Validator = {
   },
 
   validateLength(userInput) {
-    if (userInput.length !== NUMBER.COUNT) {
+    if (userInput.length !== NUMBER.DIGITS) {
       throw new Error(ERROR.LENGTH);
     }
   },
