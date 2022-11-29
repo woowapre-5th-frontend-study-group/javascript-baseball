@@ -1,10 +1,16 @@
+/** 게임코어 및 게임상태 객체 import */
 const GameCore = require("../Domains/GameCore");
 const GameState = require("../Domains/GameState");
-const InputView = require("../Views/InputView");
-const ExceptionHandler = require("../Utils/ExceptionHandler");
-const { SCENE, INPUT_TYPE } = require("../Constants");
 
+/** View Import */
+const InputView = require("../Views/InputView");
+
+/** 유틸 import */
+const ExceptionHandler = require("../Utils/ExceptionHandler");
 const { convertToNumberArray } = require("../Utils/Utils.js");
+
+/** 상수 import */
+const { SCENE, INPUT_TYPE } = require("../Constants");
 
 const GetNumberScene = {
   start() {
