@@ -6,8 +6,8 @@ class Validation {
    * 플레이어 입력값 유효성 검사
    * @param {string} playerInputValue
    */
-  static checkPlayerInputValue(playerInputValue) {
-    if (!this.#isCorrectPlayerInputValue(playerInputValue)) {
+  static checkPlayerNumbers(playerNumbers) {
+    if (!this.#isCorrectPlayerInputValue(playerNumbers)) {
       throw new Error(ERROR_MESSAGE.playerInput);
     }
   }

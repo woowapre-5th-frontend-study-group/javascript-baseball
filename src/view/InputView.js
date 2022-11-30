@@ -4,9 +4,9 @@ const Validation = require("../Validation");
 
 const InputView = {
   readPlayerInput(actionPlayerInput) {
-    Console.readLine(INPUT_MESSAGE.playerInput, (threeDigistsNumber) => {
-      Validation.checkPlayerInputValue(threeDigistsNumber);
-      actionPlayerInput(threeDigistsNumber);
+    Console.readLine(INPUT_MESSAGE.playerInput, (playerNumbers) => {
+      Validation.checkPlayerNumbers(playerNumbers);
+      actionPlayerInput(playerNumbers);
     });
   },
 

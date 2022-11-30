@@ -23,8 +23,8 @@ class App {
     InputView.readPlayerInput(this.#compareAnswer.bind(this));
   }
 
-  #compareAnswer(threeDigistsNumber) {
-    const countResult = this.#baseballGame.getCountResult(threeDigistsNumber);
+  #compareAnswer(playerNumbers) {
+    const countResult = this.#baseballGame.getCountResult(playerNumbers);
     OutputView.printCountResult(countResult);
 
     if (countResult.strike === OUT_COUNT) {
