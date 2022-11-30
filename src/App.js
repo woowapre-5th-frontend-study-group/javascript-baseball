@@ -6,51 +6,49 @@ const InputView = require("./view/InputView");
 const OutputView = require("./view/OutputView");
 
 class App {
-  constructor() {
-    this.baseballGame = new BaseballGame();
-  }
+  #baseballGame = new BaseballGame();
 
   play() {
     OutputView.printStart();
-    this.start();
+    this.#start();
   }
 
-  start() {
-    this.baseballGame.createAnswerNumbers();
+  #start() {
+    this.#baseballGame.createAnswerNumbers();
 
-    this.readPlayerInput();
+    this.#readPlayerInput();
   }
 
-  readPlayerInput() {
-    InputView.readPlayerInput(this.compareAnswer.bind(this));
+  #readPlayerInput() {
+    InputView.readPlayerInput(this.#compareAnswer.bind(this));
   }
 
-  compareAnswer(threeDigistsNumber) {
-    const count = this.baseballGame.getCount(threeDigistsNumber);
+  #compareAnswer(threeDigistsNumber) {
+    const count = this.#baseballGame.getCount(threeDigistsNumber);
     OutputView.printCountResult(count);
 
     if (count.strike === OUT_COUNT) {
       OutputView.printGameSuccess();
-      this.readGameCommand();
+      this.#readGameCommand();
       return;
     }
 
-    this.readPlayerInput();
+    this.#readPlayerInput();
   }
 
-  readGameCommand() {
-    InputView.readGameCommand(this.actionGameCommand.bind(this));
+  #readGameCommand() {
+    InputView.readGameCommand(this.#actionGameCommand.bind(this));
   }
 
-  actionGameCommand(gameCommand) {
+  #actionGameCommand(gameCommand) {
     if (Number(gameCommand) === COMMAND.restart) {
-      this.start();
+      this.#start();
       return;
     }
-    this.quit();
+    this.#quit();
   }
 
-  quit() {
+  #quit() {
     Console.close();
   }
 }
