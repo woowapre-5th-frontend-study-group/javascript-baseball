@@ -9,18 +9,25 @@ class BaseBallGame {
   #answerNumbers;
 
   getCountResult(playerNumbers) {
-    let strike = 0;
-    let ball = 0;
-    this.#setPlayerNumbers(playerNumbers).forEach(
-      (playerNumber, playerNumberIndex) => {
-        if (!this.#answerNumbers.has(playerNumber)) return;
-        if (this.#isStrike({ playerNumber, playerNumberIndex })) {
-          return (strike += 1);
-        }
-        ball += 1;
-      }
+    return this.#setPlayerNumbers(playerNumbers).reduce(
+      (countResult, playerNumber, playerNumberIndex) =>
+        this.#calculateCountResult({
+          countResult,
+          playerNumber,
+          playerNumberIndex,
+        }),
+      { strike: 0, ball: 0 }
     );
-    return { strike, ball };
+  }
+
+  #calculateCountResult({ countResult, playerNumber, playerNumberIndex }) {
+    if (!this.#answerNumbers.has(playerNumber)) return countResult;
+    if (this.#isStrike({ playerNumber, playerNumberIndex })) {
+      countResult.strike += 1;
+    } else {
+      countResult.ball += 1;
+    }
+    return countResult;
   }
 
   createAnswerNumbers() {
