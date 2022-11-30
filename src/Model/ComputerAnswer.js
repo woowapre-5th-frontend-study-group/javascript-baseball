@@ -24,8 +24,9 @@ class ComputerAnswer {
     [...playerAnswer].forEach((number, idx) => {
       if (!this.#value.includes(number)) return;
 
-      if (this.#value[idx] === number) strikeCount += 1;
-      else ballCount += 1;
+      if (this.#value[idx] === number) return (strikeCount += 1);
+
+      ballCount += 1;
     });
 
     return { ballCount, strikeCount };
