@@ -1,5 +1,5 @@
-const { MESSAGE } = require("../constant/Message");
-const { COMMAND } = require("../constant/Constant");
+const { VALUE } = require("../constant/Value");
+const { ERROR } = require("../constant/Error");
 
 const Validate = {
   checkUserInput(number) {
@@ -11,30 +11,29 @@ const Validate = {
   isNumber(number) {
     number.forEach((element) => {
       if (isNaN(element)) {
-        throw new Error(MESSAGE.NUMBER_ERROR.NOT_A_NUMBER);
+        throw new Error(ERROR.NUMBER.NOT_A_NUMBER);
       }
     });
   },
   isLengthValid(number) {
     if (number.length != 3) {
-      throw new Error(MESSAGE.NUMBER_ERROR.INVALID_LENGTH);
+      throw new Error(ERROR.NUMBER.INVALID_LENGTH);
     }
   },
   isIncludesZero(number) {
-    if (number.includes("0"))
-      throw new Error(MESSAGE.NUMBER_ERROR.INCLUDES_ZERO);
+    if (number.includes("0")) throw new Error(ERROR.NUMBER.INCLUDES_ZERO);
   },
   isDuplicated(number) {
     let removeDuplication = new Set(number);
     removeDuplication = [...removeDuplication];
     if (removeDuplication.length != 3) {
-      throw new Error(MESSAGE.NUMBER_ERROR.DUPLICATED);
+      throw new Error(ERROR.NUMBER.DUPLICATED);
     }
   },
 
   checkCommand(command) {
-    if (command !== COMMAND.RESTART && command !== COMMAND.FINISH) {
-      throw new Error(MESSAGE.COMAND_ERROR.INVALID_COMMAND);
+    if (command !== VALUE.COMMAND.RESTART && command !== VALUE.COMMAND.FINISH) {
+      throw new Error(ERROR.COMMAND.INVALID_COMMAND);
     }
   },
 };

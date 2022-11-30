@@ -1,12 +1,12 @@
 const MissionUtils = require("@woowacourse/mission-utils");
-const { RANGE_OF_COMPUTER_NUMBER } = require("../constant/Constant");
+const { VALUE } = require("../constant/Value");
 
 const RandomNumberMaker = () => {
   let pickedNumber = [];
-  while (pickedNumber.length < RANGE_OF_COMPUTER_NUMBER.LENGTH) {
+  while (pickedNumber.length < VALUE.RANGE_OF_COMPUTER_NUMBER.LENGTH) {
     let number = MissionUtils.Random.pickNumberInRange(
-      RANGE_OF_COMPUTER_NUMBER.MINIMUM,
-      RANGE_OF_COMPUTER_NUMBER.MAXIMUM
+      VALUE.RANGE_OF_COMPUTER_NUMBER.MINIMUM,
+      VALUE.RANGE_OF_COMPUTER_NUMBER.MAXIMUM
     );
     if (!pickedNumber.includes(number)) pickedNumber.push(number);
   }

@@ -1,7 +1,6 @@
 const MissionUtils = require("@woowacourse/mission-utils");
 
-const { MESSAGE } = require("../constant/Message");
-const { COMMAND } = require("../constant/Constant");
+const { VALUE } = require("../constant/Value");
 const RandomNumberMaker = require("../utils/RandomNumberMaker");
 const InputView = require("../views/InputView");
 const OutputView = require("../views/OutputView");
@@ -14,7 +13,7 @@ class GameController {
   #strike = 0;
 
   startGame() {
-    MissionUtils.Console.print(MESSAGE.START_GAME);
+    OutputView.printGameStartMessage();
     this.game();
   }
 
@@ -60,7 +59,7 @@ class GameController {
   inputCommand() {
     InputView.readCommand((command) => {
       Validate.checkCommand(command);
-      if (command == COMMAND.RESTART) {
+      if (command == VALUE.COMMAND.RESTART) {
         return this.restartGame();
       }
       return MissionUtils.Console.close();
