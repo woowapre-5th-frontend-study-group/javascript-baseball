@@ -1,6 +1,6 @@
 const { Console } = require("@woowacourse/mission-utils");
 const BaseballGame = require("./BaseballGame");
-const { COMMAND, COUNT } = require("./constants/game");
+const { COMMAND, OUT_COUNT } = require("./constants/game");
 
 const InputView = require("./view/InputView");
 const OutputView = require("./view/OutputView");
@@ -29,7 +29,7 @@ class App {
     const count = this.baseballGame.getCount(threeDigistsNumber);
     OutputView.printCountResult(count);
 
-    if (count.strike === COUNT.out) {
+    if (count.strike === OUT_COUNT) {
       OutputView.printGameSuccess();
       this.readGameCommand();
       return;
