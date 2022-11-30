@@ -24,10 +24,10 @@ class App {
   }
 
   #compareAnswer(threeDigistsNumber) {
-    const count = this.#baseballGame.getCount(threeDigistsNumber);
-    OutputView.printCountResult(count);
+    const countResult = this.#baseballGame.getCountResult(threeDigistsNumber);
+    OutputView.printCountResult(countResult);
 
-    if (count.strike === OUT_COUNT) {
+    if (countResult.strike === OUT_COUNT) {
       OutputView.printGameSuccess();
       this.#readGameCommand();
       return;

@@ -31,7 +31,7 @@ describe("BaseBallGame Class test", () => {
     playerInputValues.forEach((playerInputValue, index) => {
       const count = counts[index];
 
-      expect(baseballGame.getCount(playerInputValue)).toEqual(count);
+      expect(baseballGame.getCountResult(playerInputValue)).toEqual(count);
     });
   });
 });

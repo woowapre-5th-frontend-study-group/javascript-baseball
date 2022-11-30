@@ -8,7 +8,7 @@ class BaseBallGame {
    */
   #answerNumbers;
 
-  getCount(playerNumbers) {
+  getCountResult(playerNumbers) {
     let strike = 0;
     let ball = 0;
     this.#setPlayerNumbers(playerNumbers).forEach(
