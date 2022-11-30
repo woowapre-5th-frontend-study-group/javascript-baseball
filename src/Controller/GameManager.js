@@ -19,7 +19,9 @@ class GameManager {
   }
 
   #play() {
-    InputView.readPlayerAnswer(this.#handlePlayerAnswer.bind(this));
+    InputView.readPlayerAnswer((playerAnswer) =>
+      this.#handlePlayerAnswer(playerAnswer)
+    );
   }
 
   #handlePlayerAnswer(playerAnswer) {
@@ -33,13 +35,13 @@ class GameManager {
   }
 
   #actionAboutPlayerAnswer(playerAnswer) {
-    if (this.#computerAnswer.isThreeStrike(playerAnswer)) this.#end();
+    if (this.#computerAnswer.isThreeStrike(playerAnswer)) return this.#end();
 
     this.#play();
   }
 
   #end() {
-    InputView.readCommand(this.#handleCommand.bind(this));
+    InputView.readCommand((option) => this.#handleCommand(option));
   }
 
   #handleCommand(option) {
@@ -55,7 +57,7 @@ class GameManager {
   }
 
   #restart() {
-    this.#computerAnswer.resetValue();
+    this.#computerAnswer = new ComputerAnswer();
     this.#play();
   }
 }

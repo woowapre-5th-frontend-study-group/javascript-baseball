@@ -17,10 +17,6 @@ class ComputerAnswer {
     this.#value = [...numbers].join('');
   }
 
-  resetValue() {
-    this.#createValue();
-  }
-
   comparePlayerAnswer(playerAnswer) {
     let ballCount = 0;
     let strikeCount = 0;

@@ -1,14 +1,14 @@
 const { MESSAGE } = require('../libs/const');
 const { Console } = require('@woowacourse/mission-utils');
 
-class InputView {
-  static readPlayerAnswer(callback) {
+const InputView = {
+  readPlayerAnswer(callback) {
     Console.readLine(MESSAGE.inputNumber, callback);
-  }
+  },
 
-  static readCommand(callback) {
+  readCommand(callback) {
     Console.readLine(MESSAGE.inputOption, callback);
-  }
-}
+  },
+};
 
 module.exports = InputView;

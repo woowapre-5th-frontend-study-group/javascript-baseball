@@ -1,29 +1,33 @@
 const { Console } = require('@woowacourse/mission-utils');
 const { OUTPUT, MESSAGE, STRIKE_COUNT } = require('../libs/Const');
 
-class OutputView {
-  static printMessage(message) {
+const OutputView = {
+  printMessage(message) {
     Console.print(message);
-  }
+  },
 
-  static printResult({ ballCount, strikeCount }) {
+  printResult({ ballCount, strikeCount }) {
     if (ballCount === 0 && strikeCount === 0) {
       Console.print(OUTPUT.nothing);
       return;
     }
 
-    this.#printBallAndStrikeCount(ballCount, strikeCount);
+    this.printBallAndStrikeCount(ballCount, strikeCount);
 
-    if (strikeCount === STRIKE_COUNT) Console.print(MESSAGE.success);
-  }
+    if (this.isThreeStrike(strikeCount)) Console.print(MESSAGE.success);
+  },
 
-  static #printBallAndStrikeCount(ballCount, strikeCount) {
+  printBallAndStrikeCount(ballCount, strikeCount) {
     const ballCountPrint = ballCount !== 0 ? `${ballCount}${OUTPUT.ball} ` : '';
     const strikeCountPrint =
       strikeCount !== 0 ? `${strikeCount}${OUTPUT.strike}` : '';
 
-    Console.print(`${ballCountPrint}${strikeCountPrint}`);
-  }
-}
+    Console.print(`${ballCountPrint}${strikeCountPrint}`.trim());
+  },
+
+  isThreeStrike(strikeCount) {
+    return strikeCount === STRIKE_COUNT;
+  },
+};
 
 module.exports = OutputView;
