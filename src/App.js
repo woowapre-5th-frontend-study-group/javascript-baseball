@@ -27,6 +27,10 @@ class App {
     const countResult = this.#baseballGame.getCountResult(playerNumbers);
     OutputView.printCountResult(countResult);
 
+    this.#checkGameSuccess(countResult);
+  }
+
+  #checkGameSuccess(countResult) {
     if (countResult.strike === OUT_COUNT) {
       OutputView.printGameSuccess();
       this.#readGameCommand();
@@ -45,6 +49,7 @@ class App {
       this.#start();
       return;
     }
+
     this.#quit();
   }
 
