@@ -4,12 +4,12 @@ const { NUMBER_DIGITS } = require("./constants/game");
 class BaseBallGame {
   /**
    * 정답 숫자
-   * @type {Set<number>}
+   * @type {Set<string>}
    */
   #answerNumbers;
 
   getCountResult(playerNumbers) {
-    return this.#setPlayerNumbers(playerNumbers).reduce(
+    return playerNumbers.split("").reduce(
       (countResult, playerNumber, playerNumberIndex) =>
         this.#calculateCountResult({
           countResult,
@@ -34,15 +34,11 @@ class BaseBallGame {
     this.#answerNumbers = this.#createRandomUniqueNumberList();
   }
 
-  #setPlayerNumbers(playerNumbers) {
-    return playerNumbers.split("").map(Number);
-  }
-
   #createRandomUniqueNumberList() {
     const randomUniqueNumberList = new Set();
     while (randomUniqueNumberList.size < NUMBER_DIGITS) {
       const randomNumber = this.#randomNumberGenerate();
-      randomUniqueNumberList.add(randomNumber);
+      randomUniqueNumberList.add(String(randomNumber));
     }
     return randomUniqueNumberList;
   }
