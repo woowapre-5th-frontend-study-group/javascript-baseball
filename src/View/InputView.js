@@ -1,6 +1,5 @@
 const { Console } = require("@woowacourse/mission-utils");
 const {
-  GAME_START_MESSAGE,
   GUESS_INPUT_MESSAGE,
   GAME_COMMAND_MESSAGE,
   ERROR_MESSAGE,
@@ -13,7 +12,9 @@ const InputView = {
     Console.readLine(GUESS_INPUT_MESSAGE, callback);
   },
 
-  readCommand() {},
+  readCommand(callback) {
+    Console.readLine(GAME_COMMAND_MESSAGE, callback);
+  },
 };
 
 module.exports = InputView;

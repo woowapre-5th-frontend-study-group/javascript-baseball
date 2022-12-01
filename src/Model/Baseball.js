@@ -18,7 +18,7 @@ class Baseball {
       if (guessNum == this.#gameAnswer[index]) return (strike += 1);
       if (this.#gameAnswer.includes(guessNum)) ball += 1;
     });
-    return { ball, strike };
+    return { ballCount: ball, strikeCount: strike };
   }
 }
 

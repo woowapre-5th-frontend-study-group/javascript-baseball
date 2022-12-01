@@ -1,3 +1,6 @@
+const { Console } = require("@woowacourse/mission-utils");
+
+const { ALL_CORRECT, COMMAND } = require("../utils/constants");
 const InputValidation = require("../utils/InputValidation");
 //View(입출력)
 const InputView = require("../View/InputView");
@@ -16,9 +19,26 @@ class GameController {
     this.#baseball;
   }
 
+  restartGame() {
+    this.startGame();
+  }
+
+  askCommand() {
+    InputView.readCommand((command) => {
+      if (command == COMMAND.RESTART) return this.restartGame();
+      if (command == COMMAND.END) return Console.close();
+    });
+  }
+
+  checkThreeStrike(strikeCount) {
+    if (strikeCount == ALL_CORRECT) return this.askCommand();
+    return this.askGuessNum();
+  }
+
   showGuessResult(guess) {
     const guessResult = this.#baseball.compareWithAnswer(guess);
     OutputView.printGuessResult(guessResult);
+    this.checkThreeStrike(guessResult.strikeCount);
   }
 
   askGuessNum() {
@@ -31,7 +51,7 @@ class GameController {
     });
   }
 
-  gameStart() {
+  startGame() {
     OutputView.printStartMsg();
     this.#baseball = new Baseball();
     this.askGuessNum();

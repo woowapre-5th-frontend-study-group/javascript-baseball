@@ -4,7 +4,7 @@ const { GAME_START_MESSAGE } = require("./utils/constants");
 
 class App {
   play() {
-    new GameController().gameStart();
+    new GameController().startGame();
   }
 }
 
