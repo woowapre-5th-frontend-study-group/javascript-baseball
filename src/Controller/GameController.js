@@ -5,26 +5,36 @@ const OutputView = require("../View/OutputView");
 
 //Model
 const Computer = require("../Model/Computer");
+const Baseball = require("../Model/Baseball");
 
 //Controller는 View와 Model 사이의 인터페이스 역할
 //비즈니스 로직과 이벤트를 처리함
 class GameController {
-  #gameAnswer;
+  #baseball;
 
   constructor() {
-    this.#gameAnswer = Computer.generateAnswer();
+    this.#baseball;
   }
 
-  start() {
-    OutputView.printStartMsg();
-    console.log(this.#gameAnswer);
-    this.askGuessNums();
+  showGuessResult(guess) {
+    const guessResult = this.#baseball.compareWithAnswer(guess);
+    OutputView.printGuessResult(guessResult);
   }
 
-  askGuessNums() {
-    InputView.readPlayerGuess((guessNums) => {
-      InputValidation.isValid(guessNums);
+  askGuessNum() {
+    InputView.readPlayerGuess((guessNum) => {
+      const guessNumArr = Array.from(guessNum).map((i) => Number(i));
+      //console.log(guessNumArr);
+      InputValidation.isValid(guessNum);
+      console.log(this.#baseball.getAnswer());
+      this.showGuessResult(guessNumArr);
     });
+  }
+
+  gameStart() {
+    OutputView.printStartMsg();
+    this.#baseball = new Baseball();
+    this.askGuessNum();
   }
 }
 
