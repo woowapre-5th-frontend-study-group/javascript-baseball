@@ -1,7 +1,7 @@
-const OutputView = require('../View/OutputView');
-const InputView = require('../View/InputView');
-const ComputerAnswer = require('../Model/ComputerAnswer');
-const Validator = require('../Model/Validator');
+const OutputView = require('../views/OutputView');
+const InputView = require('../views/InputView');
+const ComputerAnswer = require('../models/ComputerAnswer');
+const Validator = require('../models/Validator');
 const Quit = require('../libs/Quit');
 const { MESSAGE, OPTION } = require('../libs/const');
 

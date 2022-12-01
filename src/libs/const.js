@@ -8,11 +8,11 @@ const MESSAGE = {
 const ERROR_HEADING = '[ERROR]';
 
 const ERROR_MESSAGE = {
-  isNotNumber: `${ERROR_HEADING} 숫자만 입력 가능합니다.`,
-  length: `${ERROR_HEADING} 숫자 3개를 입력해야 합니다.`,
-  includesZero: `${ERROR_HEADING} 0은 입력할 수 없습니다.`,
-  overlap: `${ERROR_HEADING} 중복된 숫자를 입력할 수 없습니다.`,
-  option: `${ERROR_HEADING} 1 또는 2를 입력하지 않아 애플리케이션이 종료됩니다.`,
+  isNotNumber: `숫자만 입력 가능합니다.`,
+  length: `숫자 3개를 입력해야 합니다.`,
+  includesZero: `0은 입력할 수 없습니다.`,
+  overlap: `중복된 숫자를 입력할 수 없습니다.`,
+  option: `1 또는 2를 입력하지 않아 애플리케이션이 종료됩니다.`,
 };
 
 const OPTION = {
@@ -29,6 +29,7 @@ const OUTPUT = {
 const STRIKE_COUNT = 3;
 
 module.exports = {
+  ERROR_HEADING,
   MESSAGE,
   OPTION,
   OUTPUT,
