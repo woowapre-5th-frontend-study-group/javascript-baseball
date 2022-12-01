@@ -10,7 +10,7 @@ const OutputView = require("./OutputView");
 
 const InputView = {
   readPlayerGuess(callback) {
-    //Console.readLine(GUESS_INPUT_MESSAGE, callback);
+    Console.readLine(GUESS_INPUT_MESSAGE, callback);
   },
 
   readCommand() {},
