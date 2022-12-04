@@ -1,10 +1,11 @@
-const MissionUtils = require("@woowacourse/mission-utils");
-
-const { VALUE } = require("../constant/Value");
-const RandomNumberMaker = require("../utils/RandomNumberMaker");
 const InputView = require("../views/InputView");
+const MissionUtils = require("@woowacourse/mission-utils");
 const OutputView = require("../views/OutputView");
 const Validate = require("../utils/Validate");
+
+const { VALUE } = require("../constant/Value");
+
+const RandomNumberMaker = require("../utils/RandomNumberMaker");
 
 class GameController {
   #computerNumber;
@@ -14,11 +15,13 @@ class GameController {
 
   startGame() {
     OutputView.printGameStartMessage();
-    this.game();
+
+    this.makeComputerNumber();
   }
 
-  game() {
+  makeComputerNumber() {
     this.#computerNumber = RandomNumberMaker();
+
     this.inputNumber();
   }
 
@@ -38,9 +41,10 @@ class GameController {
   countBallStrike() {
     this.#userInputNumber.forEach((item, index) => {
       if (item === this.#computerNumber[index]) {
-        this.#strike += 1;
-      } else if (this.#computerNumber.includes(Number(item))) {
-        this.#ball += 1;
+        return (this.#strike += 1);
+      }
+      if (this.#computerNumber.includes(Number(item))) {
+        return (this.#ball += 1);
       }
     });
 
@@ -59,22 +63,28 @@ class GameController {
   inputCommand() {
     InputView.readCommand((command) => {
       Validate.checkCommand(command);
-      if (command == VALUE.COMMAND.RESTART) {
+      if (command == VALUE.command.restart) {
         return this.restartGame();
       }
       return MissionUtils.Console.close();
     });
   }
+
   restartGame() {
-    this.#ball = 0;
-    this.#strike = 0;
-    this.game();
+    this.resetBallStrike();
+
+    this.makeComputerNumber();
   }
 
   continueGame() {
+    this.resetBallStrike();
+
+    this.inputNumber();
+  }
+
+  resetBallStrike() {
     this.#ball = 0;
     this.#strike = 0;
-    this.inputNumber();
   }
 }
 module.exports = GameController;
