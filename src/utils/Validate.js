@@ -1,4 +1,4 @@
-const { ERROR } = require("../constant/Error");
+const { ERROR_HEADER, ERROR } = require("../constant/Error");
 const { VALUE } = require("../constant/Value");
 
 const Validate = {
@@ -12,33 +12,37 @@ const Validate = {
   isNumber(number) {
     number.forEach((element) => {
       if (isNaN(element)) {
-        throw new Error(ERROR.number.notANumber);
+        this.throwError(ERROR.number.notANumber);
       }
     });
   },
 
   isLengthValid(number) {
     if (number.length != 3) {
-      throw new Error(ERROR.number.invalidLength);
+      this.throwError(ERROR.number.invalidLength);
     }
   },
 
   isIncludesZero(number) {
-    if (number.includes("0")) throw new Error(ERROR.number.includesZero);
+    if (number.includes("0")) this.throwError(ERROR.number.includesZero);
   },
 
   isDuplicated(number) {
     let removeDuplication = new Set(number);
     removeDuplication = [...removeDuplication];
     if (removeDuplication.length != 3) {
-      throw new Error(ERROR.number.duplicated);
+      this.throwError(ERROR.number.duplicated);
     }
   },
 
   checkCommand(command) {
     if (command !== VALUE.command.restart && command !== VALUE.command.finish) {
-      throw new Error(ERROR.command.invalidCommand);
+      this.throwError(ERROR.command.invalidCommand);
     }
+  },
+
+  throwError(error) {
+    throw new Error(ERROR_HEADER + error);
   },
 };
 
